@@ -1,0 +1,223 @@
+<h2>هبوشتي 🌷</h2>
+
+        <div class="subtitle">
+            MY LITTLE UNIVERSE
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="counter">
+            <span>Every second with you matters.</span>
+            <div id="time">Loading...</div>
+        </div>
+
+        <div class="flower" id="flower">
+            🌷
+        </div>
+
+        <button class="close" onclick="closeHeart()">
+            Close ♡
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   الرسالة
+========================================== */
+
+const text = 
+لو كان عندي نختار بلاصة وحدة في هاذ الكون كامل،
+نختار بلاصتي بحذاك نتي.
+
+ما نحتاجش عالم كامل،
+يكفيني عالم صغير يكون فيه أنا وانتي،
+وضحكتك، وهضرتك، وكل التفاصيل اللي تخلي وجودك مختلف.
+
+كل ما يدوز الوقت معاك،
+نلقى روحي نحبك أكثر.
+
+ومن بين كل الناس وكل الأماكن وكل النجوم...
+
+بقيتي نتي نجمة عالمي المفضلة. ❤️
+;
+
+let index = 0;
+
+function typeMessage(){
+
+    const box = document.getElementById("message");
+
+    if(index < text.length){
+
+        box.innerHTML +=
+            text.charAt(index)
+            === "\n"
+            ? "<br>"
+            : text.charAt(index);
+
+        index++;
+
+        setTimeout(typeMessage,28);
+    }
+}
+
+
+/* ==========================================
+   فتح الرسالة
+========================================== */
+
+function openHeart(){
+
+    document.getElementById("panel")
+        .classList.add("active");
+
+    index = 0;
+
+    document.getElementById("message")
+        .innerHTML = "";
+
+    setTimeout(typeMessage,700);
+
+    setTimeout(()=>{
+        document
+            .getElementById("flower")
+            .classList.add("show");
+    },5000);
+
+    createHearts();
+}
+
+
+/* ==========================================
+   غلق الرسالة
+========================================== */
+
+function closeHeart(){
+
+    document.getElementById("panel")
+        .classList.remove("active");
+}
+
+
+/* ==========================================
+   عداد الوقت
+========================================== */
+
+/*
+   بدّل التاريخ هنا بتاريخ بداية قصتكم
+*/
+
+const startDate =
+    new Date("2026-05-07T16:00:00");
+
+function updateCounter(){
+
+    const now = new Date();
+
+    let difference =
+        now - startDate;
+
+    if(difference < 0){
+        difference = 0;
+    }
+
+    const seconds =
+        Math.floor(difference / 1000);
+
+    const days =
+        Math.floor(seconds / 86400);
+
+    const hours =
+        Math.floor(
+            (seconds % 86400) / 3600
+        );
+
+    const minutes =
+        Math.floor(
+            (seconds % 3600) / 60
+        );
+
+    const secs =
+        seconds % 60;
+
+    document.getElementById("time")
+        .textContent =
+        ${days} days • ${hours} hours • ${minutes} minutes • ${secs} seconds;
+}
+
+setInterval(updateCounter,1000);
+
+updateCounter();
+
+
+/* ==========================================
+   القلوب الطائرة
+========================================== */
+
+function createHearts(){
+
+    for(let i=0;i<18;i++){
+
+        setTimeout(()=>{
+
+            const heart =
+                document.createElement("div");
+
+            heart.className =
+                "floating-heart";
+
+            heart.textContent =
+                ["♥","♡","💗","💖","🌷"]
+                [Math.floor(Math.random()*5)];
+
+            heart.style.left =
+                Math.random()*100 + "vw";
+
+            heart.style.bottom =
+                "-30px";
+
+            heart.style.setProperty(
+                "--x",
+                (Math.random()*200-100)+"px"
+            );
+
+            heart.style.animationDuration =
+                (3+Math.random()*3)+"s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(()=>{
+                heart.remove();
+            },6000);
+
+        },i*120);
+
+    }
+}
+
+
+/* ==========================================
+   قلوب عشوائية كل فترة
+========================================== */
+
+setInterval(()=>{
+
+    if(
+        document
+        .getElementById("panel")
+        .classList.contains("active")
+    ){
+        createHearts();
+    }
+
+},7000);
+
+</script>
+
+</body>
+</html>
